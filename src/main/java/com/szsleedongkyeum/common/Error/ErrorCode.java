@@ -8,7 +8,7 @@ public enum ErrorCode {
 
     INTERNAL_SERVER_ERROR("E_500", "서버 오류"),
     INVALID_PARAMETER("E_400", "파라미터 오류"),
-    AUTHENTICATION_ERROR("E_406", "인증에 실패했습니다."),
+    INVALID_LOGIN_INFO("E_406", "아이디 혹은 패스워드가 잘못되었습니다."),
     ACCESS_DENIED("E_403", "권한이 없습니다."),
     NOT_ALLOWED_USER("E_407", "허용되지 않은 사용자입니다."),
     DUPLICATED_USER_ID("E_408", "이미 존재하는 ID 입니다."),

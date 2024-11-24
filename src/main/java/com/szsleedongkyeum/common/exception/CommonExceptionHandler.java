@@ -1,9 +1,7 @@
 package com.szsleedongkyeum.common.exception;
 
-
-
-import static com.szsleedongkyeum.common.Error.ErrorCode.AUTHENTICATION_ERROR;
 import static com.szsleedongkyeum.common.Error.ErrorCode.INTERNAL_SERVER_ERROR;
+import static com.szsleedongkyeum.common.Error.ErrorCode.INVALID_LOGIN_INFO;
 import static com.szsleedongkyeum.common.Error.ErrorCode.INVALID_PARAMETER;
 
 import com.szsleedongkyeum.common.Error.ErrorCode;
@@ -41,11 +39,11 @@ public class CommonExceptionHandler {
         return Response.fail(INVALID_PARAMETER, errorMessage);
     }
 
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(BadCredentialsException.class)
     public Response<ErrorCode> handleBadCredentialException(HttpServletRequest request, Exception e) {
         log.error("Error processing request: {}", e.getMessage(), e);
-        return Response.fail(AUTHENTICATION_ERROR);
+        return Response.fail(INVALID_LOGIN_INFO);
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
