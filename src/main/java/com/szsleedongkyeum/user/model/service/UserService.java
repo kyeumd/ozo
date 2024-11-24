@@ -2,6 +2,7 @@ package com.szsleedongkyeum.user.model.service;
 
 import com.szsleedongkyeum.user.infra.UserRepository;
 import com.szsleedongkyeum.user.model.domain.User;
+import com.szsleedongkyeum.user.model.domain.type.AllowedUser;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ public class UserService {
 
     @Transactional
     public void singUp(String userId, String password, String name, String regNo) {
+        AllowedUser.isAllowedUser(name, regNo);
         User user = User.create(userId, password, name, regNo);
         userRepository.save(user);
     }
