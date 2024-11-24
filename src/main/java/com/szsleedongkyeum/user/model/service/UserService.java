@@ -34,4 +34,8 @@ public class UserService {
             throw new IllegalArgumentException(ErrorCode.DUPLICATED_IDENTITY.getMessage());
         }
     }
+
+    public void login(String s, String password) {
+        
+    }
 }
