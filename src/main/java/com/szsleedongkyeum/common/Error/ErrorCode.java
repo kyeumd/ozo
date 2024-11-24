@@ -9,6 +9,7 @@ public enum ErrorCode {
     INTERNAL_SERVER_ERROR("E_500", "서버 오류"),
     INVALID_PARAMETER("E_400", "파라미터 오류"),
     ACCESS_DENIED("E_403", "권한이 없습니다."),
+    ENCRYPTION_FAIL("E_506", "암호화에 실패하였습니다."),
 
     ;
 
