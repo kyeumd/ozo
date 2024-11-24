@@ -1,4 +1,4 @@
-package com.szsleedongkyeum.user.model;
+package com.szsleedongkyeum.user.model.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
