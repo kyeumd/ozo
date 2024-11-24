@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class UserService {
+public class UserLoginService {
 
     private final UserRepository userRepository;
 
@@ -36,6 +36,6 @@ public class UserService {
     }
 
     public void login(String s, String password) {
-        
+
     }
 }
