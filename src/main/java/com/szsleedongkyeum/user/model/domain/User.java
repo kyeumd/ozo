@@ -40,4 +40,8 @@ public class User {
     public static User create(String userId, String password, String name, String regNo) {
         return new User(null, userId, password, name, regNo);
     }
+
+    public void setRegNo(String regNo) {
+        this.regNo = regNo;
+    }
 }
