@@ -3,6 +3,7 @@ package com.szsleedongkyeum.user.api;
 import com.szsleedongkyeum.common.response.Response;
 import com.szsleedongkyeum.user.api.request.LoginRequest;
 import com.szsleedongkyeum.user.api.request.SignUpRequest;
+import com.szsleedongkyeum.user.api.response.LoginResponse;
 import com.szsleedongkyeum.user.application.UserLoginFacade;
 import com.szsleedongkyeum.user.application.UserSignUpFacade;
 import jakarta.validation.Valid;
@@ -27,9 +28,9 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public Response<Void> login(@Valid @RequestBody LoginRequest loginRequest) {
-        
-        return Response.success();
+    public Response<LoginResponse> login(@Valid @RequestBody LoginRequest loginRequest) {
+        String token = userLoginFacade.execute(loginRequest);
+        return Response.success(new LoginResponse(loginRequest.userId(), token));
     }
 
 }

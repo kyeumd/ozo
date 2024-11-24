@@ -1,41 +1,28 @@
 package com.szsleedongkyeum.user.model.service;
 
-import com.szsleedongkyeum.common.Error.ErrorCode;
-import com.szsleedongkyeum.user.infra.UserRepository;
-import com.szsleedongkyeum.user.model.domain.User;
-import com.szsleedongkyeum.user.model.domain.type.AllowedUser;
-import com.szsleedongkyeum.utils.EncryptionUtil;
-import jakarta.transaction.Transactional;
-import java.util.Optional;
+import com.szsleedongkyeum.security.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class UserLoginService {
 
-    private final UserRepository userRepository;
+    private final AuthenticationManagerBuilder authenticationManagerBuilder;
+    private final JwtTokenProvider jwtTokenProvider;
 
-    @Transactional
-    public void singUp(String userId, String password, String name, String regNo) {
-        AllowedUser.isAllowedUser(name, regNo);
-        validatingIdentity(userId, regNo);
-        User user = User.create(userId, password, name, regNo);
-        userRepository.save(user);
-    }
+    public String authenticateAndCreateToken(String userId, String password) {
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userId, password);
+        AuthenticationManager authenticationManager = authenticationManagerBuilder.getObject();
 
-    private void validatingIdentity(String userId, String regNo) {
-        Optional<User> userByUserId = userRepository.findByUserId(userId);
-        Optional<User> userByRegNo = userRepository.findByRegNo(EncryptionUtil.encrypt(regNo));
-        if (userByUserId.isPresent()) {
-            throw new IllegalArgumentException(ErrorCode.DUPLICATED_USER_ID.getMessage());
-        }
-        if (userByRegNo.isPresent()) {
-            throw new IllegalArgumentException(ErrorCode.DUPLICATED_IDENTITY.getMessage());
-        }
-    }
+        Authentication authentication = authenticationManager.authenticate(authenticationToken);
 
-    public void login(String s, String password) {
-
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        return jwtTokenProvider.createToken(authentication);
     }
 }
