@@ -43,3 +43,7 @@ logging:
 springdoc:
   swagger-ui:
     path: /3o3/swagger.html
+
+jwt:
+  secretKey: LqJB2qaytpB1912TSNjHioDhL8qb0Ir3w1_DgEd1bBU=
+  token-validity-in-milli-seconds: 3_600_000
