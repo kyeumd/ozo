@@ -25,11 +25,11 @@ public class RestAuthenticationSuccessHandler implements AuthenticationSuccessHa
         ObjectMapper mapper = new ObjectMapper();
 
         UserDto principal = (UserDto) authentication.getPrincipal();
-        UserResponse memberResponse = UserResponse.from(principal);
+        UserResponse userResponse = UserResponse.from(principal);
         response.setCharacterEncoding("UTF-8");
         response.setStatus(HttpStatus.OK.value());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        mapper.writeValue(response.getWriter(), Response.success(memberResponse));
+        mapper.writeValue(response.getWriter(), Response.success(userResponse));
 
         clearAuthenticationAttributes(request);
     }
