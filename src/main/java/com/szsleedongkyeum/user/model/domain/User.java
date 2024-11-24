@@ -1,5 +1,6 @@
 package com.szsleedongkyeum.user.model.domain;
 
+import com.szsleedongkyeum.utils.EncryptionUtil;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -38,10 +39,11 @@ public class User {
     }
 
     public static User create(String userId, String password, String name, String regNo) {
-        return new User(null, userId, password, name, regNo);
+        String encryptRegNo = EncryptionUtil.encrypt(regNo);
+        return new User(null, userId, password, name, encryptRegNo);
     }
 
-    public void setRegNo(String regNo) {
-        this.regNo = regNo;
+    public String getRegNoDecrypt() {
+        return EncryptionUtil.decrypt(regNo);
     }
 }
