@@ -4,6 +4,6 @@ create table USERS
     user_id  varchar(255) unique,
     name     varchar(255),
     password varchar(255),
-    regNo    varchar(255),
+    reg_no   varchar(255),
     primary key (id)
 );

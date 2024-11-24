@@ -27,7 +27,7 @@ public class User {
     private String password;
     @Column(name = "name")
     private String name;
-    @Column(name = "regNo")
+    @Column(name = "reg_no")
     private String regNo;
 
     private User(Long id, String userId, String password, String name, String regNo) {
