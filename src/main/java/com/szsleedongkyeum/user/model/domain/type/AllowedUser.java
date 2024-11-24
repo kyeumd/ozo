@@ -8,11 +8,11 @@ import lombok.Getter;
 @Getter
 public enum AllowedUser {
 
-    DONG_TAK("동탁", "921108-1582816"),
-    GWAN_WOO("관우", "681108-1582816"),
-    SON_GWUN("손권", "890601-2455116"),
-    YOU_BE("유비", "790411-1656116"),
-    JO_JO("조조", "810326-2715702"),
+    DONG_TAK("동탁", "zErsYCDjfQ1kf959khrR4A=="),
+    GWAN_WOO("관우", "3uW9s4CLyiudcmdnanpwig=="),
+    SON_GWUN("손권", "SFB7tG6ZCFVhejjkoJFXYw=="),
+    YOU_BE("유비", "/JNkPbfJkV639DCfhPK1Vg=="),
+    JO_JO("조조", "iUePgbmF0nRy6jepOSU/TA=="),
     ;
 
     private final String name;
