@@ -20,7 +20,7 @@ public class UserController {
     @PostMapping("/signup")
     public Response<Void> singUp(@Valid @RequestBody SignUpRequest signUpRequest) {
         userSignUpFacade.signUp(signUpRequest);
-        return Response.success();
+        return Response.success("회원가입이 완료되었습니다.");
     }
 
 }

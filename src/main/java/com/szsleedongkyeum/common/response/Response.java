@@ -14,6 +14,10 @@ public record Response<T>(
         return new Response<>(true, null, null, null);
     }
 
+    public static Response<Void> success(String message) {
+        return new Response<>(true, null, null, message);
+    }
+
     public static <T> Response<T> success(T data) {
         return new Response<>(true, data, null, null);
     }
