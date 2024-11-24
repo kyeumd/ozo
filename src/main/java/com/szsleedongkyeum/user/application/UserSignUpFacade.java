@@ -11,7 +11,7 @@ public class UserSignUpFacade {
 
     private final UserService userService;
 
-    public void signUp(SignUpRequest signUpRequest) {
+    public void execute(SignUpRequest signUpRequest) {
         userService.singUp(signUpRequest.userId(), signUpRequest.password(), signUpRequest.name(), signUpRequest.regNo());
     }
 }
