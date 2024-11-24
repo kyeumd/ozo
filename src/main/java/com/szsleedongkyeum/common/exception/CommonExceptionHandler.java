@@ -2,6 +2,7 @@ package com.szsleedongkyeum.common.exception;
 
 
 
+import static com.szsleedongkyeum.common.Error.ErrorCode.AUTHENTICATION_ERROR;
 import static com.szsleedongkyeum.common.Error.ErrorCode.INTERNAL_SERVER_ERROR;
 import static com.szsleedongkyeum.common.Error.ErrorCode.INVALID_PARAMETER;
 
@@ -11,6 +12,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -37,6 +39,13 @@ public class CommonExceptionHandler {
                                .collect(Collectors.joining(", ")); // 메시지를 쉼표로 연결
 
         return Response.fail(INVALID_PARAMETER, errorMessage);
+    }
+
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(BadCredentialsException.class)
+    public Response<ErrorCode> handleBadCredentialException(HttpServletRequest request, Exception e) {
+        log.error("Error processing request: {}", e.getMessage(), e);
+        return Response.fail(AUTHENTICATION_ERROR);
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
