@@ -7,7 +7,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.math.BigDecimal;
-import java.time.YearMonth;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,23 +23,23 @@ public class UsersTaxationPensionDeductions {
     private Long id;
     @Column(name = "user_id")
     private Long userId;
-    @Column(name = "month")
-    private YearMonth month;
+    @Column(name = "year_month")
+    private String yearMonth;
     @Column(name = "amount")
     private BigDecimal amount;
 
-    private UsersTaxationPensionDeductions(Long id, Long userId, YearMonth month, BigDecimal amount) {
+    private UsersTaxationPensionDeductions(Long id, Long userId, String yearMonth, BigDecimal amount) {
         this.id = id;
         this.userId = userId;
-        this.month = month;
+        this.yearMonth = yearMonth;
         this.amount = amount;
     }
 
-    public static UsersTaxationPensionDeductions create(Long userId, YearMonth month, BigDecimal amount) {
+    public static UsersTaxationPensionDeductions create(Long userId, String yearMonth, BigDecimal amount) {
         return new UsersTaxationPensionDeductions(
             null,
             userId,
-            month,
+            yearMonth,
             amount
         );
     }

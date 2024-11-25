@@ -3,6 +3,7 @@ package com.szsleedongkyeum.scrap.model.service.out;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.szsleedongkyeum.taxation.model.service.in.UsersTaxationSaveInput;
+import com.szsleedongkyeum.taxation.model.service.in.UsersTaxationSaveInput.CreditCardDeductions;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -65,19 +66,18 @@ public record TaxationScrapResult(
     public UsersTaxationSaveInput convertSaveInput() {
         List<UsersTaxationSaveInput.pensionData> pensions = this.data().deductions().pension().stream()
                                                                 .map(p -> new UsersTaxationSaveInput.pensionData(p.month(),
-                                                                    p.amount()))
+                                                                    p.amount().replace(",", "")))
                                                                 .collect(Collectors.toList());
 
-        Map<String, String> creditCardDeductions = this.data().deductions().creditCardDeduction().month().stream()
-                                                       .flatMap(map -> map.entrySet().stream())
-                                                       .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        CreditCardDeductions creditCardDeductions = new CreditCardDeductions(this.data().deductions.creditCardDeduction.month,
+            this.data().deductions.creditCardDeduction.year);
 
         return new UsersTaxationSaveInput(
-            this.data().totalIncome(),
+            this.data().totalIncome().replace(",", ""),
             this.data().name(),
             pensions,
             creditCardDeductions,
-            this.data().deductions().taxCredit()
+            this.data().deductions().taxCredit().replace(",", "")
         );
     }
 }
