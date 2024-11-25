@@ -2,8 +2,10 @@ package com.szsleedongkyeum.scrap.model.service.out;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.szsleedongkyeum.taxation.model.service.in.UsersTaxationSaveInput;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public record TaxationScrapResult(
     String status,
@@ -60,4 +62,22 @@ public record TaxationScrapResult(
     ) {
     }
 
+    public UsersTaxationSaveInput convertSaveInput() {
+        List<UsersTaxationSaveInput.pensionData> pensions = this.data().deductions().pension().stream()
+                                                                .map(p -> new UsersTaxationSaveInput.pensionData(p.month(),
+                                                                    p.amount()))
+                                                                .collect(Collectors.toList());
+
+        Map<String, String> creditCardDeductions = this.data().deductions().creditCardDeduction().month().stream()
+                                                       .flatMap(map -> map.entrySet().stream())
+                                                       .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+
+        return new UsersTaxationSaveInput(
+            this.data().totalIncome(),
+            this.data().name(),
+            pensions,
+            creditCardDeductions,
+            this.data().deductions().taxCredit()
+        );
+    }
 }
