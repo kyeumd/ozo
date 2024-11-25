@@ -21,8 +21,8 @@ public class UsersTaxationCreditCardDeductions {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-    @Column(name = "deduction_id")
-    private Long deductionId;
+    @Column(name = "user_id")
+    private Long userId;
     @Column(name = "year")
     private int year;
     @Column(name = "month")
@@ -30,18 +30,18 @@ public class UsersTaxationCreditCardDeductions {
     @Column(name = "amount")
     private BigDecimal amount;
 
-    private UsersTaxationCreditCardDeductions(Long id, Long deductionId, int year, int month, BigDecimal amount) {
+    private UsersTaxationCreditCardDeductions(Long id, Long userId, int year, int month, BigDecimal amount) {
         this.id = id;
-        this.deductionId = deductionId;
+        this.userId = userId;
         this.year = year;
         this.month = month;
         this.amount = amount;
     }
 
-    public static UsersTaxationCreditCardDeductions create(Long deductionId, int year, int month, BigDecimal amount) {
+    public static UsersTaxationCreditCardDeductions create(Long userId, int year, int month, BigDecimal amount) {
         return new UsersTaxationCreditCardDeductions(
             null,
-            deductionId,
+            userId,
             year,
             month,
             amount

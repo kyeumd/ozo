@@ -7,7 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.YearMonth;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,24 +22,24 @@ public class UsersTaxationPensionDeductions {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-    @Column(name = "deduction_id")
-    private Long deductionId;
+    @Column(name = "user_id")
+    private Long userId;
     @Column(name = "month")
-    private LocalDate month;
+    private YearMonth month;
     @Column(name = "amount")
     private BigDecimal amount;
 
-    private UsersTaxationPensionDeductions(Long id, Long deductionId, LocalDate month, BigDecimal amount) {
+    private UsersTaxationPensionDeductions(Long id, Long userId, YearMonth month, BigDecimal amount) {
         this.id = id;
-        this.deductionId = deductionId;
+        this.userId = userId;
         this.month = month;
         this.amount = amount;
     }
 
-    public static UsersTaxationPensionDeductions create(Long deductionId, LocalDate month, BigDecimal amount) {
+    public static UsersTaxationPensionDeductions create(Long userId, YearMonth month, BigDecimal amount) {
         return new UsersTaxationPensionDeductions(
             null,
-            deductionId,
+            userId,
             month,
             amount
         );
