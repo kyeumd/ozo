@@ -25,7 +25,7 @@ public class UserSignUpService {
     }
 
     private void validatingIdentity(String userId, String regNo) {
-        Optional<User> userByUserId = userRepository.findByUserId(userId);
+        Optional<User> userByUserId = userRepository.findByCreatorUserId(userId);
         Optional<User> userByRegNo = userRepository.findByRegNo(EncryptionUtil.encrypt(regNo));
         if (userByUserId.isPresent()) {
             throw new IllegalArgumentException(ErrorCode.DUPLICATED_USER_ID.getMessage());

@@ -22,7 +22,7 @@ public class UserDetailService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
-        Optional<User> user = userRepository.findByUserId(userId);
+        Optional<User> user = userRepository.findByCreatorUserId(userId);
         UserDto userDto = user.map(UserDto::from)
                               .orElseThrow(() -> new UsernameNotFoundException("No user found user ID : " + userId));
         List<GrantedAuthority> authorities = new ArrayList<>();
