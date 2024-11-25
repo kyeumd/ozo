@@ -46,7 +46,7 @@ class UserControllerTest {
     @BeforeEach
     public void setUpData() {
         jdbcTemplate.execute(
-            "INSERT INTO USERS(user_id, password, name, reg_no) "
+            "INSERT INTO USERS(creator_user_id, password, name, reg_no) "
                 + "VALUES ('dongTak', 'e4b7c5949ec030a894d9a659ed64276bf8f792a219be0139aedbe89d1ee2efd43df16dd0ca2f6c8a5cb184d90a5fae3c', '동탁', 'zErsYCDjfQ1kf959khrR4A==')");
     }
 
