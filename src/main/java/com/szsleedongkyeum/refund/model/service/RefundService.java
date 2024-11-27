@@ -2,6 +2,7 @@ package com.szsleedongkyeum.refund.model.service;
 
 import com.szsleedongkyeum.refund.model.domain.type.TaxBracket;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -9,7 +10,7 @@ public class RefundService {
 
     public BigDecimal calculateRefund(BigDecimal taxableIncome, BigDecimal deductionAmount, BigDecimal taxCreditsAmount) {
         //과세 표준 계산
-        BigDecimal taxBase = taxableIncome.subtract(deductionAmount);
+        BigDecimal taxBase = taxableIncome.subtract(deductionAmount).setScale(0, RoundingMode.HALF_UP);
 
         //산출세액 계산
         TaxBracket bracket = TaxBracket.findBracket(taxBase);

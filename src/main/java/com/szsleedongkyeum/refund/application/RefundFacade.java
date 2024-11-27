@@ -18,7 +18,7 @@ public class RefundFacade {
 
     public BigDecimal calculateRefund() {
         Long userId = AuthenticationUserService.getUserId();
-        UsersTaxationQueryResult userTaxation = userTaxationQueryService.getUserTaxation(userId, Year.now().getValue());
+        UsersTaxationQueryResult userTaxation = userTaxationQueryService.getUserTaxation(userId, Year.now().getValue() - 1);
         return refundService.calculateRefund(userTaxation.totalIncome(), userTaxation.deductionAmount(), userTaxation.taxCreditsAmount());
     }
 }
