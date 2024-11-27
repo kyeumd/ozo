@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class UsersTaxationService {
+public class UsersTaxationSaveService {
 
     private final UserTaxationRepository userTaxationRepository;
     private final UsersTaxationDeductionsRepository usersTaxationDeductionsRepository;

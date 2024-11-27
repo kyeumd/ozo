@@ -3,7 +3,7 @@ package com.szsleedongkyeum.scrap.application;
 import com.szsleedongkyeum.scrap.model.service.ScrapService;
 import com.szsleedongkyeum.scrap.model.service.in.TaxationScrapInput;
 import com.szsleedongkyeum.scrap.model.service.out.TaxationScrapResult;
-import com.szsleedongkyeum.taxation.model.service.UsersTaxationService;
+import com.szsleedongkyeum.taxation.model.service.UsersTaxationSaveService;
 import com.szsleedongkyeum.user.model.service.UserService;
 import com.szsleedongkyeum.user.model.service.out.UserInfoResult;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class ScrapFacade {
 
-    private final UsersTaxationService usersTaxationService;
+    private final UsersTaxationSaveService usersTaxationService;
     private final ScrapService scrapService;
     private final UserService userService;
 
