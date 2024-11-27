@@ -4,11 +4,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.szsleedongkyeum.taxation.infra.UserTaxationRepository;
-import com.szsleedongkyeum.taxation.infra.UsersTaxationCreditCardDeductionsRepository;
-import com.szsleedongkyeum.taxation.infra.UsersTaxationPensionDeductionsRepository;
+import com.szsleedongkyeum.taxation.infra.UsersTaxationDeductionsRepository;
 import com.szsleedongkyeum.taxation.model.domain.UsersTaxation;
-import com.szsleedongkyeum.taxation.model.domain.UsersTaxationCreditCardDeductions;
-import com.szsleedongkyeum.taxation.model.domain.UsersTaxationPensionDeductions;
+import com.szsleedongkyeum.taxation.model.domain.UsersTaxationDeductions;
 import com.szsleedongkyeum.taxation.model.service.in.UsersTaxationSaveInput;
 import jakarta.transaction.Transactional;
 import java.math.BigDecimal;
@@ -29,10 +27,7 @@ class UsersTaxationServiceTest {
     private UserTaxationRepository userTaxationRepository;
 
     @Autowired
-    private UsersTaxationPensionDeductionsRepository usersTaxationPensionDeductionsRepository;
-
-    @Autowired
-    private UsersTaxationCreditCardDeductionsRepository usersTaxationCreditCardDeductionsRepository;
+    private UsersTaxationDeductionsRepository usersTaxationDeductionsRepository;
 
     @Test
     @Transactional
@@ -55,8 +50,8 @@ class UsersTaxationServiceTest {
             "50000",
             "동탁",
             List.of(
-                new UsersTaxationSaveInput.pensionData("2024-10", "1000"),
-                new UsersTaxationSaveInput.pensionData("2024-08", "2000")
+                new UsersTaxationSaveInput.pensionData("2023-08", "1000"),
+                new UsersTaxationSaveInput.pensionData("2023-10", "2000")
             ),
             creditCardDeductions,
             "3000"
@@ -69,27 +64,23 @@ class UsersTaxationServiceTest {
         assertEquals(new BigDecimal("50000"), savedTaxation.getTotalIncome());
         assertEquals(new BigDecimal("3000"), savedTaxation.getTaxCreditsAmount());
 
-        List<UsersTaxationPensionDeductions> savedPensions =
-            usersTaxationPensionDeductionsRepository.findAllByUserId(userId);
-        assertEquals(2, savedPensions.size());
-        assertTrue(savedPensions.stream().anyMatch(pd ->
-            pd.getYearMonth().equals("2024-10") && pd.getAmount().equals(new BigDecimal("1000"))
+        List<UsersTaxationDeductions> savedDeductions =
+            usersTaxationDeductionsRepository.findAllByUserId(userId);
+        assertEquals(5, savedDeductions.size());
+        assertTrue(savedDeductions.stream().anyMatch(ccd ->
+            ccd.getDeductionYear() == 2023 && ccd.getDeductionMonth() == 1 && ccd.getCreditCardDeduction().equals(new BigDecimal("1000"))
         ));
-        assertTrue(savedPensions.stream().anyMatch(pd ->
-            pd.getYearMonth().equals("2024-08") && pd.getAmount().equals(new BigDecimal("2000"))
+        assertTrue(savedDeductions.stream().anyMatch(ccd ->
+            ccd.getDeductionYear() == 2023 && ccd.getDeductionMonth() == 2 && ccd.getCreditCardDeduction().equals(new BigDecimal("2000"))
         ));
-
-        List<UsersTaxationCreditCardDeductions> savedCreditCardDeductions =
-            usersTaxationCreditCardDeductionsRepository.findAllByUserId(userId);
-        assertEquals(3, savedCreditCardDeductions.size());
-        assertTrue(savedCreditCardDeductions.stream().anyMatch(ccd ->
-            ccd.getDeductionYear() == 2023 && ccd.getDeductionMonth() == 1 && ccd.getAmount().equals(new BigDecimal("1000"))
+        assertTrue(savedDeductions.stream().anyMatch(ccd ->
+            ccd.getDeductionYear() == 2023 && ccd.getDeductionMonth() == 3 && ccd.getCreditCardDeduction().equals(new BigDecimal("3000"))
         ));
-        assertTrue(savedCreditCardDeductions.stream().anyMatch(ccd ->
-            ccd.getDeductionYear() == 2023 && ccd.getDeductionMonth() == 2 && ccd.getAmount().equals(new BigDecimal("2000"))
+        assertTrue(savedDeductions.stream().anyMatch(ccd ->
+            ccd.getDeductionYear() == 2023 && ccd.getDeductionMonth() == 8 && ccd.getPensionDeduction().equals(new BigDecimal("1000"))
         ));
-        assertTrue(savedCreditCardDeductions.stream().anyMatch(ccd ->
-            ccd.getDeductionYear() == 2023 && ccd.getDeductionMonth() == 3 && ccd.getAmount().equals(new BigDecimal("3000"))
+        assertTrue(savedDeductions.stream().anyMatch(ccd ->
+            ccd.getDeductionYear() == 2023 && ccd.getDeductionMonth() == 10 && ccd.getPensionDeduction().equals(new BigDecimal("2000"))
         ));
     }
 
