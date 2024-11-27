@@ -21,7 +21,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 class UsersTaxationServiceTest {
 
     @Autowired
-    private UsersTaxationService usersTaxationService;
+    private UsersTaxationSaveService usersTaxationService;
 
     @Autowired
     private UserTaxationRepository userTaxationRepository;
