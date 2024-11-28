@@ -16,20 +16,24 @@ public enum AllowedUser {
     ;
 
     private final String name;
-    private final String decryptRegNo;
+    private final String encryptRegNo;
 
     AllowedUser(String name, String decryptRegNo) {
         this.name = name;
-        this.decryptRegNo = decryptRegNo;
+        this.encryptRegNo = decryptRegNo;
     }
 
     public static void isAllowedUser(String name, String regNo) {
         for (AllowedUser user : AllowedUser.values()) {
             String encryptRegNo = EncryptionUtil.encrypt(regNo);
-            if (user.name.equals(name) && user.decryptRegNo.equals(encryptRegNo)) {
+            if (user.name.equals(name) && user.encryptRegNo.equals(encryptRegNo)) {
                 return;
             }
         }
         throw new IllegalArgumentException(NOT_ALLOWED_USER.getMessage());
+    }
+
+    public String getDecryptRegNo() {
+        return EncryptionUtil.decrypt(encryptRegNo);
     }
 }
