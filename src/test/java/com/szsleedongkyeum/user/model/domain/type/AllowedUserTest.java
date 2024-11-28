@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 class AllowedUserTest {
 
     @Test
-    @DisplayName("허용된_사용자를_확인한다.")
+    @DisplayName("허용되지_않은_사용자는_가입이_불가능하다.")
     void testAllowedUser() {
         String userName = "anonymous";
         String regNo = "941130-1010110";
