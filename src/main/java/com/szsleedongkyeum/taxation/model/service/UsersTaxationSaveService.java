@@ -1,5 +1,6 @@
 package com.szsleedongkyeum.taxation.model.service;
 
+import com.szsleedongkyeum.common.Error.ErrorCode;
 import com.szsleedongkyeum.taxation.infra.UserTaxationRepository;
 import com.szsleedongkyeum.taxation.infra.UsersTaxationDeductionsRepository;
 import com.szsleedongkyeum.taxation.model.domain.UsersTaxation;
@@ -11,6 +12,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -65,5 +67,14 @@ public class UsersTaxationSaveService {
 
     private BigDecimal parseAmount(String amount) {
         return new BigDecimal(amount.replace(",", ""));
+    }
+
+    public void validateDuplicate(Long userId) {
+        Optional<UsersTaxation> usersTaxationOptional = userTaxationRepository.findByUserId(userId);
+        List<UsersTaxationDeductions> usersTaxationDeductions = usersTaxationDeductionsRepository.findAllByUserId(userId);
+
+        if (usersTaxationOptional.isPresent() || !usersTaxationDeductions.isEmpty()) {
+            throw new IllegalStateException(ErrorCode.DUPLICATED_SCRAP_INFO.getMessage());
+        }
     }
 }

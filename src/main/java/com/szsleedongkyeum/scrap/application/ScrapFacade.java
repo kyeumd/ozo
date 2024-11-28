@@ -19,6 +19,7 @@ public class ScrapFacade {
 
     public void scrapAggregateIncome() {
         UserInfoResult currentUserInfo = userService.getCurrentUserInfo();
+        usersTaxationService.validateDuplicate(currentUserInfo.userId());
         TaxationScrapInput taxationScrapInput = new TaxationScrapInput(currentUserInfo.name(), currentUserInfo.regNo());
         TaxationScrapResult taxationScrapResult = scrapService.getTaxationScrapResult(taxationScrapInput, "zF9f42h3Ju14Hr3+wEcwBg==",
             "https://codetest-v4.3o3.co.kr/scrap");
