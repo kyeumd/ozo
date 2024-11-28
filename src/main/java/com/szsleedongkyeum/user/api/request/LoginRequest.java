@@ -1,11 +1,11 @@
 package com.szsleedongkyeum.user.api.request;
 
-import jakarta.validation.constraints.NotBlank;
+import com.szsleedongkyeum.support.ValidRequired;
 
 public record LoginRequest(
-    @NotBlank(message = "id는 필수 입력입니다.")
+    @ValidRequired(fieldName = "아이디")
     String userId,
-    @NotBlank(message = "비밀번호는 필수 입력입니다.")
+    @ValidRequired(fieldName = "비밀번호")
     String password
 ) {
 }
