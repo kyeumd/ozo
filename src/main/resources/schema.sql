@@ -5,7 +5,10 @@ create table IF NOT EXISTS USERS
     name            varchar(255),
     password        varchar(255),
     reg_no          varchar(255),
-    primary key (id)
+    created_at timestamp(6) not null,
+    created_by varchar(255) not null,
+    updated_at timestamp(6),
+    updated_by varchar(255)
 );
 
 create table IF NOT EXISTS USERS_TAXATION
@@ -14,7 +17,11 @@ create table IF NOT EXISTS USERS_TAXATION
     user_id            bigint         not null,
     name               varchar(100),
     total_income       decimal(15, 2) not null,
-    tax_credits_amount decimal(15, 2) not null
+    tax_credits_amount decimal(15, 2) not null,
+    created_at timestamp(6) not null,
+    created_by varchar(255) not null,
+    updated_at timestamp(6),
+    updated_by varchar(255)
 );
 
 create table IF NOT EXISTS USERS_TAXATION_DEDUCTIONS
@@ -24,5 +31,9 @@ create table IF NOT EXISTS USERS_TAXATION_DEDUCTIONS
     deduction_year         int            not null,
     deduction_month        int            not null,
     pension_deduction       decimal(15, 2) default 0,
-    credit_card_deduction       decimal(15, 2) default 0
+    credit_card_deduction       decimal(15, 2) default 0,
+    created_at timestamp(6) not null,
+    created_by varchar(255) not null,
+    updated_at timestamp(6),
+    updated_by varchar(255)
 );

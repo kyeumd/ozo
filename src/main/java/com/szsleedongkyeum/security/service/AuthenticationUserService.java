@@ -22,7 +22,13 @@ public class AuthenticationUserService {
         if (authentication == null || !authentication.isAuthenticated()) {
             throw new IllegalArgumentException(ErrorCode.AUTHENTICATION_NOT_FOUND.getMessage());
         }
+
         Object principal = authentication.getPrincipal();
+
+        if (!(principal instanceof UserContext)) {
+            throw new IllegalArgumentException(ErrorCode.AUTHENTICATION_NOT_FOUND.getMessage());
+        }
+        
         return (UserContext) principal;
     }
 }

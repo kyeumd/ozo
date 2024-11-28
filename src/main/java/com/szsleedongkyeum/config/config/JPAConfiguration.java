@@ -1,5 +1,6 @@
 package com.szsleedongkyeum.config.config;
 
+import com.szsleedongkyeum.security.service.AuthenticationUserService;
 import java.util.Optional;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,7 +13,6 @@ public class JPAConfiguration {
 
     @Bean
     public AuditorAware<String> auditorProvider() {
-        return () -> Optional.of("test User");
+        return () -> Optional.ofNullable(AuthenticationUserService.getUserCreatorId());
     }
-
 }

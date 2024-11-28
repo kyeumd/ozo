@@ -1,5 +1,6 @@
 package com.szsleedongkyeum.taxation.model.domain;
 
+import com.szsleedongkyeum.support.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "USERS_TAXATION")
-public class UsersTaxation {
+public class UsersTaxation extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

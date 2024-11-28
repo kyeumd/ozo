@@ -7,9 +7,14 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import java.time.LocalDateTime;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
 
 @Getter
 @Entity
@@ -29,6 +34,18 @@ public class User {
     private String name;
     @Column(name = "reg_no")
     private String regNo;
+    @CreatedBy
+    @Column(name = "created_by", nullable = false, updatable = false)
+    private String createdBy;
+    @CreatedDate
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+    @LastModifiedBy
+    @Column(name = "updated_by", nullable = false)
+    private String updatedBy;
+    @LastModifiedDate
+    @Column(name = "updated_at", nullable = false)
+    private LocalDateTime updatedAt;
 
     private User(Long id, String userId, String password, String name, String regNo) {
         this.id = id;
@@ -36,6 +53,10 @@ public class User {
         this.password = password;
         this.name = name;
         this.regNo = regNo;
+        this.createdBy = "system";
+        this.updatedBy = "system";
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
     }
 
     public static User create(String userId, String password, String name, String regNo) {
